@@ -17,6 +17,7 @@ module.exports = {
     if(player.voiceChannelId != interaction.member.voice.channelId) 
       return interaction.reply(`You are not in the same voice channel as me`);
     player.destroy();
+    return interaction.reply(`Bye bye!`);
   },
 
 };
