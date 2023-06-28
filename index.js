@@ -1,4 +1,4 @@
-const {Client,Collection, Events, GatewayIntentBits } = require('discord.js');
+const {Client,Collection, GatewayIntentBits } = require('discord.js');
 const { token, nodes } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -61,7 +61,7 @@ for (const file of eventFiles) {
       client.vulkava.once(event.name, (...args) => event.execute(client,...args));
     }
     else{
-      client.vulkava.once(event.name, (...args) => event.execute(client,...args));
+      client.vulkava.on(event.name, (...args) => event.execute(client,...args));
     }
 
   }

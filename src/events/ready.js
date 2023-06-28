@@ -4,10 +4,10 @@ module.exports = {
   name : Events.ClientReady,
   once : true,
   execute(client) {
-    console.log(`Client is ready, logged in as ${client.user.tag}`);
     try{
 
       client.vulkava.start(client.user.id);
+      console.log(`Client is ready, logged in as ${client.user.tag}`);
     }
     catch(err){
       console.error(err);
