@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { getDashBoard } = require('../../dashboard.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { embedColor } = require('../../../config.json');
 
 module.exports = {
   data : new SlashCommandBuilder()
@@ -13,14 +13,20 @@ module.exports = {
   async execute(interaction) {
     const client = interaction.client;
     const track = interaction.options.getString('track');
+    let response = new EmbedBuilder().setColor(embedColor);
 
-    if(!interaction.member.voice) return interaction.reply(`You need to join a voice channel first`);
+    if(!interaction.member.voice.channel) {
+      response.setDescription(`You need to join a voice channel first`);
+      return interaction.reply({embeds : [response]});
+    }
     const res = await client.vulkava.search(track);
 
     if (res.loadType === "LOAD_FAILED") {
-      return interaction.reply(`:x: Load failed. Error: ${res.exception.message}`);
+      response.setDescription(`:x: Load failed. Error: ${res.exception.message}`);
+      return interaction.reply({embeds : [response]});
     } else if (res.loadType === "NO_MATCHES") {
-      return interaction.reply(':x: No matches!');
+      response.setDescription(':x: No matches!');
+      return interaction.reply({embeds :[response]});
     }
 
       // Creates the audio player
@@ -35,8 +41,10 @@ module.exports = {
       player.connect(); // Connects to the voice channel
     }
 
-    if(player.voiceChannelId != interaction.member.voice.channelId) 
-      return interaction.reply(`You are not in the same voice channel as me`);
+    if(player.voiceChannelId != interaction.member.voice.channelId) {
+      response.setDescription(`You are not in the same voice channel as me`);
+      return interaction.reply({embeds :[response]});
+    }
 
     if (res.loadType === 'PLAYLIST_LOADED') {
       for (const track of res.tracks) {
@@ -44,16 +52,23 @@ module.exports = {
         player.queue.add(track);
       }
 
-      interaction.reply(`Playlist \`${res.playlistInfo.name}\` loaded!`);
+      const iconUrl = interaction.member.avatarURL();
+      response
+        .setAuthor({name: 'Enqueued', iconURL : iconUrl})
+        .setDescription(`Added playlist \`${res.playlistInfo.name}`);
     } else {
       const track = res.tracks[0];
       track.setRequester(interaction.user);
 
       player.queue.add(track);
-      interaction.reply(`Queued \`${track.title}\``);
+      const iconUrl = interaction.member.avatarURL();
+      response
+        .setAuthor({name: 'Enqueued', iconURL : iconUrl})
+        .setDescription(`Added track \`${track.title}`);
     }
 
     if (!player.playing) player.play();
+    interaction.reply({embeds :[response]});
 
   },
 
