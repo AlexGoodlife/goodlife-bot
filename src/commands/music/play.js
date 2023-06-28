@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { getDashBoard } = require('../../dashboard.js');
 
 module.exports = {
   data : new SlashCommandBuilder()
@@ -14,8 +15,6 @@ module.exports = {
     const track = interaction.options.getString('track');
 
     if(!interaction.member.voice) return interaction.reply(`You need to join a voice channel first`);
-
-
     const res = await client.vulkava.search(track);
 
     if (res.loadType === "LOAD_FAILED") {

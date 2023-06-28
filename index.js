@@ -1,4 +1,4 @@
-const {Client,Collection, GatewayIntentBits } = require('discord.js');
+const {Client, GatewayIntentBits } = require('discord.js');
 const { token, nodes } = require('./config.json');
 const { Vulkava } = require('vulkava');
 const handlers = require('./src/handlers.js');
