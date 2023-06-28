@@ -1,9 +1,26 @@
 const {Client,Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+const { token, nodes } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
+const { Vulkava } = require('vulkava');
 
-const client = new Client({ intents : [GatewayIntentBits.Guilds]});
+const client = new Client(
+  { 
+    intents : 
+    [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildVoiceStates
+    ]
+  }
+);
+
+client.vulkava = new Vulkava({
+  nodes : nodes,
+  sendWS: (guildId, payload) =>{
+    client.guilds.cache.get(guildId)?.shard.send(payload);
+  }
+
+});
 
 client.commands = new Collection();
 
@@ -32,13 +49,29 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
 	const event = require(filePath);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
+
+  // gotta pass in the client for raw sry
+  if(event.name == "raw"){
+    client.on(event.name, (...args) => event.execute(client, ...args));
+    continue;
+  }
+
+  if(event.vulkava){
+    if(event.once){
+      client.vulkava.once(event.name, (...args) => event.execute(client,...args));
+    }
+    else{
+      client.vulkava.once(event.name, (...args) => event.execute(client,...args));
+    }
+
+  }
+  else{
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(...args));
+    } else {
+      client.on(event.name, (...args) => event.execute(...args));
+    }
+  }
 }
-
-
 
 client.login(token);
