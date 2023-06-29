@@ -11,8 +11,8 @@ const handleCommands = async (interaction) => {
     try{
       await command.execute(interaction);
     }
-    catch(error){
-      console.log(error);
+    catch(err){
+      console.error(err);
       if(interaction.replied || interaction.deferred){
         await interaction.followUp({content : 'Error executing command'});
       }
@@ -31,6 +31,7 @@ const handleButtons = async (interaction) => {
   try{
     await button.execute(interaction);
   }catch(err){
+    console.error(err);
       if(interaction.replied || interaction.deferred){
         await interaction.followUp({content : 'Error executing button'});
       }

@@ -73,8 +73,8 @@ module.exports = {
       const button = require(buttonPath);
 
       if('id' in button && 'execute' in button){
-        client.buttons.set(button.name, button);
-        console.log(`Loaded Button: ${button.name}`);
+        client.buttons.set(button.id, button);
+        console.log(`Loaded Button: ${button.id}`);
       }
       else{
         console.log(`[WARNING] The button at ${filePath} is missing a required "id" or "execute" property.`);
