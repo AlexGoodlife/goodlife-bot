@@ -4,7 +4,7 @@ const { embedColor } = require('../../config.json');
 module.exports = {
   vulkava : true,
   name : "queueEnd",
-  execute(client, player){
+  async execute(client, player){
     const channel = client.channels.cache.get(player.textChannelId);
 
 
@@ -12,7 +12,7 @@ module.exports = {
     const embed = new EmbedBuilder()
     .setAuthor({name : 'Queue is done', iconURL: thumbnailUrl})
     .setColor(embedColor)
-    channel.send({embeds : [embed]});
+    await channel.send({embeds : [embed]});
 
     player.destroy();
   }
