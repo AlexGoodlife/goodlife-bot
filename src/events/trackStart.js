@@ -33,7 +33,16 @@ module.exports = {
         .setEmoji(stopEmoji),
      );
 
-    await channel.send({embeds : [embed], components : [buttons]});
+    const message = await channel.send({embeds : [embed], components : [buttons]});
+    if(client.lastTrack){
+      try{
+        await client.lastTrack.delete();
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+    client.lastTrack = message;
 
   }
 }

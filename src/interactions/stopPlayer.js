@@ -24,6 +24,15 @@ module.exports = {
     }
     player.destroy();
     response.setTitle('Bye bye');
+    if(client.lastTrack){
+      try {
+        await client.lastTrack.delete();
+        client.lastTrack = null;
+        
+      } catch (err) {
+        console.error(err);        
+      }
+    }
     return await interaction.reply({embeds: [response]});
   }
 }
