@@ -8,10 +8,12 @@ module.exports = {
     const channel = client.channels.cache.get(player.textChannelId);
 
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();
+    const songImageUrl = track.thumbnail;
     const embed = new EmbedBuilder()
     .setAuthor({name : 'Now playing!', iconURL: thumbnailUrl})
     .setTitle(`${track.title}`)
     .setColor(embedColor)
+    .setThumbnail(songImageUrl)
 
     // const playEmoji = client.emojis.cache.find( e => e.name === "play_pause");
     const buttons  = new ActionRowBuilder().setComponents(

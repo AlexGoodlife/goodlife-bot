@@ -52,7 +52,7 @@ module.exports = {
         player.queue.add(track);
       }
 
-      const iconUrl = interaction.member.avatarURL();
+      const iconUrl = interaction.member.user.avatarURL();
       response
         .setAuthor({name: 'Enqueued', iconURL : iconUrl})
         .setDescription(`Added playlist \`${res.playlistInfo.name}`);
@@ -61,7 +61,7 @@ module.exports = {
       track.setRequester(interaction.user);
 
       player.queue.add(track);
-      const iconUrl = interaction.member.avatarURL();
+      const iconUrl = interaction.member.user.avatarURL();
       response
         .setAuthor({name: 'Enqueued', iconURL : iconUrl})
         .setDescription(`Added track \`${track.title}`);

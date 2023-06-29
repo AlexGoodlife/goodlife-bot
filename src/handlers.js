@@ -62,7 +62,7 @@ module.exports = {
     }
   },
 
-  loadButton(client){
+  loadButtons(client){
     const buttonsPath = path.join(__dirname, './buttons');
     const buttonFiles = fs.readdirSync(buttonsPath).filter(file => file.endsWith('.js'));
 

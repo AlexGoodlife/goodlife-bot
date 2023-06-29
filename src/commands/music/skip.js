@@ -33,7 +33,7 @@ module.exports = {
 
     player.skip();
     const title = player.current.title;
-    const iconUrl = interaction.member.avatarURL();
+    const iconUrl = interaction.member.user.avatarURL();
     response.setDescription(`\ ${title}`);
     response.setAuthor({name : 'Skipped', iconURL : iconUrl});
     return interaction.reply({ embeds : [response]});
