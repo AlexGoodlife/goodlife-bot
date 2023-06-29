@@ -60,5 +60,26 @@ module.exports = {
         }
       }
     }
+  },
+
+  loadButton(client){
+    const buttonsPath = path.join(__dirname, './buttons');
+    const buttonFiles = fs.readdirSync(buttonsPath).filter(file => file.endsWith('.js'));
+
+    client.buttons = new Collection();
+    
+    for(const file of buttonFiles){
+      const buttonPath = path.join(buttonsPath,file);
+      const button = require(buttonPath);
+
+      if('id' in button && 'execute' in button){
+        client.buttons.set(button.name, button);
+        console.log(`Loaded Button: ${button.name}`);
+      }
+      else{
+        console.log(`[WARNING] The button at ${filePath} is missing a required "id" or "execute" property.`);
+      }
+
+    }
   }
 }

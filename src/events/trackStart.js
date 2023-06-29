@@ -1,4 +1,4 @@
-const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, AttachmentBuilder, EmbedBuilder, ButtonStyle } = require('discord.js');
 const { embedColor } = require('../../config.json');
 
 module.exports = {
@@ -12,7 +12,25 @@ module.exports = {
     .setAuthor({name : 'Now playing!', iconURL: thumbnailUrl})
     .setTitle(`${track.title}`)
     .setColor(embedColor)
-    channel.send({embeds : [embed]});
+
+    // const playEmoji = client.emojis.cache.find( e => e.name === "play_pause");
+    const buttons  = new ActionRowBuilder().setComponents(
+      new ButtonBuilder()
+        .setCustomId('pauseButton')
+        .setLabel('Pause')
+        .setStyle(ButtonStyle.Primary),
+        // .setEmoji(playEmoji.toString()),
+      new ButtonBuilder()
+        .setCustomId('skipButton')
+        .setLabel('Skip')
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId('stopButton')
+        .setLabel('Stop')
+        .setStyle(ButtonStyle.Primary)
+     );
+
+    channel.send({embeds : [embed], components : [buttons]});
 
     // channel.send(`Now playing \`${track.title}\``);
   }

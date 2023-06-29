@@ -8,7 +8,8 @@ const client = new Client(
     intents : 
     [
       GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildVoiceStates
+      GatewayIntentBits.GuildVoiceStates,
+      GatewayIntentBits.GuildEmojisAndStickers
     ]
   }
 );
@@ -23,5 +24,6 @@ client.vulkava = new Vulkava({
 
 handlers.loadCommands(client);
 handlers.loadEvents(client);
+handlers.loadButton(client);
 
 client.login(token);

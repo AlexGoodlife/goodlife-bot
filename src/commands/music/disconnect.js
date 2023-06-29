@@ -7,7 +7,7 @@ module.exports = {
   .setDescription('disconnects bot'),
   async execute(interaction) {
     const client = interaction.client;
-    let response = new EmbedBuilder().setColor(config.embedColor);
+    let response = new EmbedBuilder().setColor(embedColor);
 
     if(!interaction.member.voice.channel){
       response.setDescription(`You need to join a voice channel first`);
