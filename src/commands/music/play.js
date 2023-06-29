@@ -17,16 +17,16 @@ module.exports = {
 
     if(!interaction.member.voice.channel) {
       response.setDescription(`You need to join a voice channel first`);
-      return await interaction.reply({embeds : [response]});
+      return await interaction.reply({embeds : [response], ephemeral: true});
     }
     const res = await client.vulkava.search(track);
 
     if (res.loadType === "LOAD_FAILED") {
       response.setDescription(`:x: Load failed. Error: ${res.exception.message}`);
-      return await interaction.reply({embeds : [response]});
+      return await interaction.reply({embeds : [response], ephemeral: true});
     } else if (res.loadType === "NO_MATCHES") {
       response.setDescription(':x: No matches!');
-      return await interaction.reply({embeds :[response]});
+      return await interaction.reply({embeds : [response], ephemeral: true});
     }
 
       // Creates the audio player
@@ -43,7 +43,7 @@ module.exports = {
 
     if(player.voiceChannelId != interaction.member.voice.channelId) {
       response.setDescription(`You are not in the same voice channel as me`);
-      return await interaction.reply({embeds :[response]});
+      return await interaction.reply({embeds : [response], ephemeral: true});
     }
 
     if (res.loadType === 'PLAYLIST_LOADED') {

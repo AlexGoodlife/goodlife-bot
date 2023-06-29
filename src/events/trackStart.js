@@ -14,6 +14,7 @@ module.exports = {
     .setTitle(`${track.title}`)
     .setColor(embedColor)
     .setThumbnail(songImageUrl)
+    .setTimestamp();
 
     const playEmoji = "⏸️";
     const stopEmoji = "⏹️";

@@ -24,6 +24,7 @@ module.exports = {
     }
     player.destroy();
     response.setTitle('Bye bye');
+    response.setURL("https://github.com/AlexGoodlife")
     if(client.lastTrack){
       try {
         await client.lastTrack.delete();

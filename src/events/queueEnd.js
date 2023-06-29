@@ -9,8 +9,9 @@ module.exports = {
 
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();
     const embed = new EmbedBuilder()
-    .setAuthor({name : 'Queue is done', iconURL: thumbnailUrl})
+    .setAuthor({name : 'Queue is done!', iconURL: thumbnailUrl})
     .setColor(embedColor)
+    .setTimestamp();
     await channel.send({embeds : [embed]});
 
     if(client.lastTrack){
