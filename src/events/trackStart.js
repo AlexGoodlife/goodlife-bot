@@ -15,21 +15,26 @@ module.exports = {
     .setColor(embedColor)
     .setThumbnail(songImageUrl)
 
-    // const playEmoji = client.emojis.cache.find( e => e.name === "play_pause");
+    // const playEmoji = client.emojis.cache.find( e => e.name == "play_pause");
+    const playEmoji = "⏸️";
+    const stopEmoji = "⏹️";
+    const skipEmoji = "⏭️";
     const buttons  = new ActionRowBuilder().setComponents(
       new ButtonBuilder()
         .setCustomId('pauseButton')
-        .setLabel('Pause')
-        .setStyle(ButtonStyle.Primary),
-        // .setEmoji(playEmoji.toString()),
+        // .setLabel('Pause')
+        .setStyle(ButtonStyle.Primary)
+        .setEmoji(playEmoji),
       new ButtonBuilder()
         .setCustomId('skipButton')
-        .setLabel('Skip')
-        .setStyle(ButtonStyle.Primary),
+        // .setLabel('Skip')
+        .setEmoji(skipEmoji)
+        .setStyle(ButtonStyle.Success),
       new ButtonBuilder()
         .setCustomId('stopButton')
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Primary)
+        // .setLabel('Stop')
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji(stopEmoji),
      );
 
     channel.send({embeds : [embed], components : [buttons]});
