@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
 const { embedColor } = require('../../../config.json');
 
 module.exports = {
@@ -61,13 +61,21 @@ module.exports = {
       track.setRequester(interaction.user);
 
       player.queue.add(track);
+      const place = bold(` #${player.queue.size}`);
       const iconUrl = interaction.member.user.avatarURL();
       response
         .setAuthor({name: 'Enqueued', iconURL : iconUrl})
-        .setDescription(`Added track \`${track.title}`);
+        .setDescription(`\"${track.title}" at ${place}`);
     }
 
     if (!player.playing) player.play();
+
+    // hack incoming, I don't want to send an enqueued message when its the first song
+    if(!client.lastTrack){
+      response = new EmbedBuilder().setDescription("Boo");
+      await interaction.reply({embeds :[response]});
+      return await interaction.deleteReply();
+    }
     await interaction.reply({embeds :[response]});
 
   },

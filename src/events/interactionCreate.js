@@ -1,4 +1,5 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
+const { embedColor } = require('../../config.json');
 
 const handleCommands = async (interaction) => {
     const command = interaction.client.commands.get(interaction.commandName);
@@ -12,12 +13,17 @@ const handleCommands = async (interaction) => {
       await command.execute(interaction);
     }
     catch(err){
+      const thumbnailUrl = interaction.guild.iconURL();
+      const response = new EmbedBuilder()
+        .setAuthor({name: "There was an error!", iconURL: thumbnailUrl })
+        .setDescription("An error occured when executing the command")
+        .setColor(embedColor);
       console.error(err);
       if(interaction.replied || interaction.deferred){
-        await interaction.followUp({content : 'Error executing command'});
+        await interaction.followUp({embeds : [response], ephemeral: true});
       }
       else{
-        await interaction.reply({content : 'Error executing command'});
+        await interaction.reply({embeds : [response], ephemeral: true});
       }
     }
 };
@@ -31,13 +37,18 @@ const handleButtons = async (interaction) => {
   try{
     await button.execute(interaction);
   }catch(err){
+    const thumbnailUrl = interaction.guild.iconURL();
+    const response = new EmbedBuilder()
+    .setAuthor({name: "There was an error!", iconURL: thumbnailUrl })
+    .setDescription("An error occured when executing the button")
+    .setColor(embedColor);
     console.error(err);
-      if(interaction.replied || interaction.deferred){
-        await interaction.followUp({content : 'Error executing button'});
-      }
-      else{
-        await interaction.reply({content : 'Error executing button'});
-      }
+    if(interaction.replied || interaction.deferred){
+      await interaction.followUp({embeds : [response], ephemeral: true});
+    }
+    else{
+      await interaction.reply({embeds : [response], ephemeral: true});
+    }
   }
 };
 
