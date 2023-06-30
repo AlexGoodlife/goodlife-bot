@@ -25,9 +25,6 @@ client.vulkava = new Vulkava({
 
 client.lastTrack = null;
 
-// handlers.loadCommands(client);
-// handlers.loadEvents(client);
-// handlers.loadButtons(client);
 handlers.run(client);
 
 client.login(token);
