@@ -1,4 +1,4 @@
-const { readSourceFiles } = require('../read-source-files.js');
+const  readSourceFiles  = require('../read-source-files.js');
 
 module.exports = {
   run : (client) =>{
