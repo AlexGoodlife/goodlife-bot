@@ -1,5 +1,5 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const { embedColor } = require('../../config.json');
+const { embedColor } = require('../../../config.json');
 
 const handleCommands = async (interaction) => {
     const command = interaction.client.commands.get(interaction.commandName);

@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const { embedColor } = require('../../config.json');
+const { embedColor } = require('../../../config.json');
 
 module.exports = {
   vulkava : true,
