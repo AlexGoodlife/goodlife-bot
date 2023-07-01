@@ -14,7 +14,7 @@ const handleCommands = async (interaction) => {
   if(!botPermissions || !botPermissions2 || !botPermissions3){
     const response = new EmbedBuilder();
     console.log('Attempted to use bot in restricted channel');
-    response.setDescription('This is a private voice channel, give me permissions or I cant function');
+    response.setDescription('This is a private text channel, give me permissions or I cant function');
     response.setColor(embedColor);
     try{
 

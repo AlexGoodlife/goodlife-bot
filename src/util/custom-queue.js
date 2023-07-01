@@ -1,6 +1,6 @@
 const { DefaultQueue } = require('vulkava');
 
-module.exports = class Queue extends DefaultQueue{
+module.exports = class CustomQueue extends DefaultQueue{
 
   constructor(){
     super();
@@ -8,6 +8,11 @@ module.exports = class Queue extends DefaultQueue{
 
   peek(){
     return this.tracks[0];
+  }
+
+  getDetails(){
+    const data = [];
+    
   }
 
 
