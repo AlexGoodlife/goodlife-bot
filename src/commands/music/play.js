@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, bold, PermissionsBitField} = require('discord.js');
 const { embedColor } = require('../../../config.json');
 const formatTime = require('../../util/time-format.js');
 
@@ -20,6 +20,13 @@ module.exports = {
       response.setDescription(`You need to join a voice channel first`);
       return await interaction.reply({embeds : [response], ephemeral: true});
     }
+
+    const botPermissions = await interaction.guild.members.me?.permissionsIn(interaction.member.voice.channel).has(PermissionsBitField.Flags.ViewChannel);
+    const botPermissions2 = await interaction.guild.members.me?.permissionsIn(interaction.member.voice.channel).has(PermissionsBitField.Flags.Speak);
+    if(!botPermissions || botPermissions2){
+      response.setDescription('I need to be able to see your voice channel and speak in it');
+      return await interaction.reply({embeds : [response], ephemeral: true});
+    }
     const res = await client.vulkava.search(track);
 
     if (res.loadType === "LOAD_FAILED") {
@@ -39,7 +46,13 @@ module.exports = {
       });
 
     if(player.state != "CONNECTED"){
-      player.connect(); // Connects to the voice channel
+      try{
+        player.connect(); // Connects to the voice channel
+      }
+      catch(err){
+        console.error(err);
+        player.destroy();
+      }
     }
 
     if(player.voiceChannelId != interaction.member.voice.channelId) {
