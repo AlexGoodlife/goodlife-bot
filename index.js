@@ -23,6 +23,7 @@ client.vulkava = new Vulkava({
 });
 
 client.lastTrack = null;
+client.waitTimeout = null;
 
 handlers.run(client);
 

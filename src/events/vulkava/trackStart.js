@@ -6,6 +6,10 @@ module.exports = {
   vulkava : true,
   name : "trackStart",
   async execute(client, player, track){
+    if(client.waitTimeout != null){
+      clearTimeout(client.waitTimeout);
+      client.waitTimeout = null;
+    } 
     const channel = client.channels.cache.get(player.textChannelId);
 
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();

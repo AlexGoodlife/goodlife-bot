@@ -1,6 +1,6 @@
 
-const { EmbedBuilder } = require('discord.js');
-const { embedColor } = require('../../../config.json');
+const { EmbedBuilder , bold} = require('discord.js');
+const { embedColor , waitAmount} = require('../../../config.json');
 module.exports = {
   vulkava : true,
   name : "queueEnd",
@@ -23,7 +23,20 @@ module.exports = {
         console.error(err);
       }
     }
+    
+    client.waitTimeout = setTimeout(async () =>{
+      try{
+        const response = new EmbedBuilder()
+        .setDescription(`[Leaving after waiting for ${bold(waitAmount)} minutes](https://github.com/AlexGoodlife)`)
+        .setColor(embedColor)
+        .setAuthor({name: 'Finished waiting', iconURL: thumbnailUrl})
+        await channel.send({embeds: [response]});
+        player.destroy();
+      }
+      catch(err){
+        console.error(err);
+      }
+    }, waitAmount*60000);
 
-    player.destroy();
   }
 }
