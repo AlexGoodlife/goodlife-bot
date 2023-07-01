@@ -23,8 +23,8 @@ module.exports = {
 
     }
     player.destroy();
-    response.setTitle('Bye bye');
-    response.setURL("https://github.com/AlexGoodlife")
+    response.setAuthor({name: 'Player stopped!', iconURL: interaction.member.user.avatarURL()});
+    response.setDescription(`Stopped by ${interaction.member.toString()}`);
     if(client.lastTrack){
       try {
         await client.lastTrack.delete();

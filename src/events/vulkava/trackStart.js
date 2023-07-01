@@ -9,16 +9,33 @@ module.exports = {
 
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();
     const songImageUrl = track.thumbnail;
+    let currentDate = new Date(0);
+    currentDate.setSeconds(player.current.duration/ 1000);
+    let currentTimeString = currentDate.toISOString().substring(11, 19);
     const embed = new EmbedBuilder()
     .setAuthor({name : 'Now playing!', iconURL: thumbnailUrl})
     .setTitle(`${track.title}`)
     .setColor(embedColor)
     .setThumbnail(songImageUrl)
+    .setFields([
+      {
+        name: 'Requested by:',
+        value: track.requester.toString(),
+        inline: true
+      },
+      {
+        name: 'Length',
+        value: currentTimeString,
+        inline: true
+      }
+    ])
     .setTimestamp();
 
     const playEmoji = "⏸️";
     const stopEmoji = "⏹️";
     const skipEmoji = "⏭️";
+    const loopEmoji = "🔁";
+    let loopStyle = player.trackRepeat ? ButtonStyle.Danger : ButtonStyle.Primary; 
     const buttons  = new ActionRowBuilder().setComponents(
       new ButtonBuilder()
         .setCustomId('pauseButton')
@@ -32,6 +49,10 @@ module.exports = {
         .setCustomId('stopButton')
         .setStyle(ButtonStyle.Danger)
         .setEmoji(stopEmoji),
+      new ButtonBuilder()
+        .setCustomId('loopButton')
+        .setStyle(loopStyle)
+        .setEmoji(loopEmoji),
      );
 
     const message = await channel.send({embeds : [embed], components : [buttons]});

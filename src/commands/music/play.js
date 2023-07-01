@@ -70,12 +70,6 @@ module.exports = {
 
     if (!player.playing) player.play();
 
-    // hack incoming, I don't want to send an enqueued message when its the first song
-    if(!client.lastTrack){
-      response = new EmbedBuilder().setDescription("Boo");
-      await interaction.reply({embeds :[response]});
-      return await interaction.deleteReply();
-    }
     await interaction.reply({embeds :[response]});
 
   },

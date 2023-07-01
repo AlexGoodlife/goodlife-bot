@@ -21,11 +21,6 @@ readSourceFiles(__dirname, 'src/commands', (command) =>{
 });
 
 const rest = new REST().setToken(token);
-// TO DELETE COMMANDS I HAVE TO THIS WAY
-// rest.delete(Routes.applicationCommand(clientID, '1124083903553089566'))
-// 	.then(() => console.log('Successfully deleted application command'))
-// 	.catch(console.error);
-
 
 (async () =>{
   try{
