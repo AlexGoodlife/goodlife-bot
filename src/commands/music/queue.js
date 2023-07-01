@@ -58,7 +58,7 @@ module.exports = {
     );
     const multiplier = (page-1)*songsPerPage;
     const limit = Math.min(songsPerPage + (multiplier*songsPerPage), player.queue.size);
-    for(let i = (page-1)*songsPerPage; i < limit;i++){
+    for(let i = multiplier; i < limit;i++){
       const currentTrack = player.queue.getTrackAt(i);
       fields.push(
         {
