@@ -10,6 +10,7 @@ module.exports = {
     option.setRequired(false)
     .setName('amount')
     .setDescription("Number of tracks to skip")
+    .setMinValue(1),
   ),
   async execute(interaction) {
     const amount = interaction.options.getNumber('amount');

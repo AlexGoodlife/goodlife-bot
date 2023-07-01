@@ -26,10 +26,6 @@ module.exports = {
       response.setDescription(`Queue is empty`);
       return await interaction.reply({ embeds : [response], ephemeral: true});
     } 
-    // if(amount > player.queue.size){
-    //   response.setDescription(`There are only ${bold(player.queue.size)} tracks in the queue`);
-    //   return await interaction.reply({ embeds : [response], ephemeral: true});
-    // }
 
     const oldQueueSize = player.queue.size;
     await player.skip(amount);

@@ -25,11 +25,25 @@ module.exports = class CustomQueue extends DefaultQueue{
     return track;
   }
 
-  bumpPrevious(){
-    const popped = this.previousTracks.pop();
-    if(popped){
-      this.tracks.unshift(popped); 
-      this.tracks.unshift(this.previousTracks.pop()); 
+  bumpPrevious(amount){
+    let size = Math.min(amount, this.previousTracks.size);
+    for(let i = 0; i < size; i++){
+      if(i == 0){
+        const popped = this.previousTracks.pop();
+        if(popped){
+          this.tracks.unshift(popped); 
+          this.tracks.unshift(this.previousTracks.pop()); 
+        }
+      }
+      else{
+        this.tracks.unshift(this.previousTracks.pop()); 
+      }
+    }
+  }
+
+  skipNTracks(n){
+    for(let i = 0; i < n-1;i++){
+      this.poll();
     }
   }
 

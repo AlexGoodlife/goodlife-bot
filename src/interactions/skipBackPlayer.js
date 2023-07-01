@@ -1,8 +1,8 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder , bold} = require('discord.js');
 const { embedColor } = require('../../config.json');
 
 module.exports = {
-  async skipBackPlayer(interaction){
+  async skipBackPlayer(interaction, amount){
     const client = interaction.client;
     let response = new EmbedBuilder().setColor(embedColor);
 
@@ -26,20 +26,17 @@ module.exports = {
       response.setDescription(`Queue is empty`);
       return await interaction.reply({ embeds : [response], ephemeral: true});
     } 
-    console.log(player.queue.previousTracks.size);
 
     if(player.queue.previousTracks.size <= 1){
       response.setDescription(`There is no track to go back to`);
       return await interaction.reply({ embeds : [response], ephemeral: true});
     }
 
-    player.queue.bumpPrevious(); // get our new track in
+    player.queue.bumpPrevious(amount); // get our new track in
     await player.skip();
 
-    const title = player.current.title;
     const iconUrl = interaction.member.user.avatarURL();
-    // response.setDescription(`\ ${title}`);
-    response.setAuthor({name : 'Skipped back the player', iconURL : iconUrl});
+    response.setAuthor({name : `Skipped back ${amount} tracks`, iconURL : iconUrl});
     return await interaction.reply({ embeds : [response]});
   }
 }
