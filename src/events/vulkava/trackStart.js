@@ -1,5 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder , EmbedBuilder, ButtonStyle } = require('discord.js');
 const { embedColor } = require('../../../config.json');
+const timeFormat = require('../../util/time-format');
 
 module.exports = {
   vulkava : true,
@@ -9,24 +10,28 @@ module.exports = {
 
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();
     const songImageUrl = track.thumbnail;
-    let currentDate = new Date(0);
-    currentDate.setSeconds(player.current.duration/ 1000);
-    let currentTimeString = currentDate.toISOString().substring(11, 19);
+    const currentTimeString = timeFormat(player.current.duration);
     const embed = new EmbedBuilder()
     .setAuthor({name : 'Now playing!', iconURL: thumbnailUrl})
     .setTitle(`${track.title}`)
+    .setURL(track.uri)
     .setColor(embedColor)
     .setThumbnail(songImageUrl)
     .setFields([
       {
-        name: 'Requested by:',
-        value: track.requester.toString(),
+        name: 'Author',
+        value: track.author,
         inline: true
       },
+{ name: '\u200b', value: '\u200b',inline:true },
       {
         name: 'Length',
         value: currentTimeString,
         inline: true
+      },
+      {
+        name: 'Requested by',
+        value: track.requester.toString(),
       }
     ])
     .setTimestamp();
@@ -35,7 +40,7 @@ module.exports = {
     const stopEmoji = "⏹️";
     const skipEmoji = "⏭️";
     const loopEmoji = "🔁";
-    let loopStyle = player.trackRepeat ? ButtonStyle.Danger : ButtonStyle.Primary; 
+    let loopStyle = player.trackRepeat ? ButtonStyle.Danger : ButtonStyle.Secondary; 
     const buttons  = new ActionRowBuilder().setComponents(
       new ButtonBuilder()
         .setCustomId('pauseButton')

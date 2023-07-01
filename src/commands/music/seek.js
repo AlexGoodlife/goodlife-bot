@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
+const timeFormat = require('../../util/time-format');
 const  { embedColor } = require('../../../config.json');
 
 module.exports = {
@@ -42,9 +43,7 @@ module.exports = {
     }
     player.seek(position);
 
-    let date = new Date(0);
-    date.setSeconds(position/1000);
-    let timeString = date.toISOString().substring(11, 19);
+    const timeString = timeFormat(position);
     response.setAuthor({name: 'Seeked position in track', iconURL: interaction.member.user.avatarURL() });
     response.setDescription(`${bold(player.current.title)} set to ${bold(timeString)}`)
     response.setTimestamp();

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
 const  { embedColor } = require('../../../config.json');
+const timeFormat = require('../../util/time-format');
 
 module.exports = {
   data : new SlashCommandBuilder()
@@ -42,9 +43,7 @@ module.exports = {
     }
     player.seek(position);
 
-    let date = new Date(0);
-    date.setSeconds(position/1000);
-    let timeString = date.toISOString().substring(11, 19);
+    const timeString = timeFormat(position);
     response.setAuthor({name: 'Forwarded position in track', iconURL: interaction.member.user.avatarURL() });
     response.setDescription(`${bold(player.current.title)} set to ${bold(timeString)}`)
     return await interaction.reply({embeds: [response]});

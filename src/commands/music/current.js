@@ -1,6 +1,7 @@
 
 const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
 const  { embedColor } = require('../../../config.json');
+const timeFormat = require('../../util/time-format.js');
 
 module.exports = {
   data : new SlashCommandBuilder()
@@ -16,18 +17,18 @@ module.exports = {
       return await interaction.reply({embeds: [response], ephemeral: true});
     } 
 
-    let date = new Date(0);
-    date.setSeconds(player.exactPosition/1000);
-    let timeString = date.toISOString().substring(11, 19);
-    let currentDate = new Date(0);
-    currentDate.setSeconds(player.current.duration/ 1000);
-    let currentTimeString = currentDate.toISOString().substring(11, 19);
+    let timeString = timeFormat(player.exactPosition);
+    let currentTimeString = timeFormat(player.current.duration);
     response.setTitle('Current track');
     response.setFields(
       {
         name: 'Title',
-        value: player.current.title,
+        value: `[${player.current.title}](${player.current.uri})`,
         inline: true
+      },
+      {
+        name: 'Author',
+        value: player.current.author
       },
       {
         name: 'Requested by',

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, bold} = require('discord.js');
 const { embedColor } = require('../../../config.json');
+const formatTime = require('../../util/time-format.js');
 
 module.exports = {
   data : new SlashCommandBuilder()
@@ -53,19 +54,40 @@ module.exports = {
       }
 
       const iconUrl = interaction.member.user.avatarURL();
+      let currentTimeString = formatTime(res.playlistInfo.duration);
       response
-        .setAuthor({name: 'Enqueued', iconURL : iconUrl})
-        .setDescription(`Added playlist \`${res.playlistInfo.name}`);
+        .setAuthor({name: 'Enqueued a playlist', iconURL : iconUrl})
+        .setDescription(`${bold(res.playlistInfo.name)}`)
+        .setFields([
+          {
+            name: "Length",
+            value: currentTimeString
+          }
+        ]);
     } else {
       const track = res.tracks[0];
       track.setRequester(interaction.user);
+      let currentTimeString = formatTime(track.duration);
 
       player.queue.add(track);
       const place = bold(` #${player.queue.size}`);
       const iconUrl = interaction.member.user.avatarURL();
       response
         .setAuthor({name: 'Enqueued', iconURL : iconUrl})
-        .setDescription(`\"${track.title}" at ${place}`);
+        .setDescription(`\[${track.title}](${track.uri}) at ${place}`)
+        .setURL(track.uri)
+        .setFields([
+          {
+            name: 'Author',
+            value: track.author,
+            inline: true
+          },
+          {
+            name: "Length",
+            value: currentTimeString,
+            inline: true
+          }
+      ]);
     }
 
     if (!player.playing) player.play();

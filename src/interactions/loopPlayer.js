@@ -1,6 +1,7 @@
 
 const { EmbedBuilder, bold } = require('discord.js');
 const { embedColor } = require('../../config.json');
+const timeFormat = require('../util/time-format.js');
 
 module.exports = {
   async loopPlayer(interaction){
@@ -9,23 +10,27 @@ module.exports = {
 
     if(!interaction.member.voice) {
       response.setDescription(`You need to join a voice channel first`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return null;
     }
 
     const player = client.vulkava.players.get(interaction.guild.id);
     if(!player) {
       response.setDescription(`There is no player for this guild`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return null;
     } 
 
     if(player.voiceChannelId != interaction.member.voice.channelId) {
       response.setDescription(`You are not in the same voice channel as me`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return null;
     } 
 
     if(!player.current){
       response.setDescription(`Queue is empty`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return null;
     } 
 
     let responseString = 'on';
@@ -34,13 +39,11 @@ module.exports = {
 
     }
     player.setTrackLoop(!player.trackRepeat);
-    const title = player.current.title;
-    const iconUrl = interaction.member.user.avatarURL();
+    // const title = player.current.title;
+    // const iconUrl = interaction.member.user.avatarURL();
     response.setDescription(`Looping was turned ${bold(responseString)} by ${interaction.member.toString()}`)
     if(player.trackRepeat){
-      let currentDate = new Date(0);
-      currentDate.setSeconds(player.current.duration/ 1000);
-      let currentTimeString = currentDate.toISOString().substring(11, 19);
+      const currentTimeString = timeFormat(player.current.duration);
       response.setFields(
         {
           name: 'Current track',
@@ -54,6 +57,7 @@ module.exports = {
       response.setThumbnail(player.current.thumbnail);
     }
     // response.setAuthor({name : `Looping is turned ${responseString}`, iconURL : iconUrl});
-    return await interaction.reply({ embeds : [response]});
+    await interaction.reply({ embeds : [response]});
+    return player;
   }
 }
