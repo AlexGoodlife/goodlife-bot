@@ -5,9 +5,15 @@ const { skipPlayer } = require('../../interactions/skipPlayer');
 module.exports = {
   data : new SlashCommandBuilder()
   .setName('skip')
-  .setDescription('skips current song'),
+  .setDescription('skips current song')
+  .addNumberOption(option =>
+    option.setRequired(false)
+    .setName('amount')
+    .setDescription("Number of tracks to skip")
+  ),
   async execute(interaction) {
-    skipPlayer(interaction);
+    const amount = interaction.options.getNumber('amount');
+    skipPlayer(interaction, amount);
   },
 
 };

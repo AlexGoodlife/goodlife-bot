@@ -40,12 +40,17 @@ module.exports = {
     const stopEmoji = "⏹️";
     const skipEmoji = "⏭️";
     const loopEmoji = "🔁";
+    const skipBackEmoji = "⏪";
     let loopStyle = player.trackRepeat ? ButtonStyle.Danger : ButtonStyle.Secondary; 
     const buttons  = new ActionRowBuilder().setComponents(
       new ButtonBuilder()
         .setCustomId('pauseButton')
         .setStyle(ButtonStyle.Primary)
         .setEmoji(playEmoji),
+      new ButtonBuilder()
+        .setCustomId('skipBackButton')
+        .setStyle(ButtonStyle.Success)
+        .setEmoji(skipBackEmoji),
       new ButtonBuilder()
         .setCustomId('skipButton')
         .setEmoji(skipEmoji)

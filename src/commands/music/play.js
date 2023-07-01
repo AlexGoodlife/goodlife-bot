@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, bold, PermissionsBitField} = require('discord.js');
 const { embedColor } = require('../../../config.json');
+const CustomQueue = require('../../util/CustomQueue.js');
 const formatTime = require('../../util/time-format.js');
 
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
 
     const botPermissions = await interaction.guild.members.me?.permissionsIn(interaction.member.voice.channel).has(PermissionsBitField.Flags.ViewChannel);
     const botPermissions2 = await interaction.guild.members.me?.permissionsIn(interaction.member.voice.channel).has(PermissionsBitField.Flags.Speak);
-    if(!botPermissions || botPermissions2){
+    if(!botPermissions || !botPermissions2){
       response.setDescription('I need to be able to see your voice channel and speak in it');
       return await interaction.reply({embeds : [response], ephemeral: true});
     }
@@ -42,7 +43,8 @@ module.exports = {
         guildId: interaction.guild.id,
         voiceChannelId: interaction.member.voice.channelId,
         textChannelId: interaction.channel.id,
-        selfDeaf: true
+        selfDeaf: true,
+        queue : new CustomQueue()
       });
 
     if(player.state != "CONNECTED"){
@@ -63,7 +65,7 @@ module.exports = {
     if (res.loadType === 'PLAYLIST_LOADED') {
       for (const track of res.tracks) {
         track.setRequester(interaction.user);
-        player.queue.add(track);
+        await player.queue.add(track);
       }
 
       const iconUrl = interaction.member.user.avatarURL();
@@ -82,7 +84,7 @@ module.exports = {
       track.setRequester(interaction.user);
       let currentTimeString = formatTime(track.duration);
 
-      player.queue.add(track);
+      await player.queue.add(track);
       const place = bold(` #${player.queue.size}`);
       const iconUrl = interaction.member.user.avatarURL();
       response
@@ -103,7 +105,7 @@ module.exports = {
       ]);
     }
 
-    if (!player.playing) player.play();
+    if (!player.playing){ await player.play();}
 
     await interaction.reply({embeds :[response]});
 
