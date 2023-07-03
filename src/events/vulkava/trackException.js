@@ -9,6 +9,6 @@ module.exports = {
     const embed = new EmbedBuilder().setDescription(`TRACK EXCEPTION ON :  \ ${track.title}\n ${error.message} `);
     embed.setColor(embedColor);
     await channel.send({embeds : [embed]});
-    // player.skip(); 
+    player.skip(); 
   }
 }
