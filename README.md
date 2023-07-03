@@ -4,20 +4,7 @@
 This is the code for my personal use bot that I made so me and my friends can listen to music on discord with no hassles.
 I leave the code here so anybody that wants to use it as a template is free to do so.
 
-<button onclick="location.href='https://discord.com/api/oauth2/authorize?client_id=709471193043959883&permissions=36857856&scope=bot%20applications.commands'" type="button" name="button" class="btn">Test him out</button>
-<style type="text/css" rel="stylesheet">
-.btn {background-color: rgb(25, 144, 255);
-        color: white;
-        border: none;
-        height: 36px;
-        width: 120px;
-        border-radius: 18px;
-        font-weight: bold;
-        font-size: 15px;
-        cursor: pointer;
-}
-
-</style>
+# [Test him out](https://discord.com/api/oauth2/authorize?client_id=709471193043959883&permissions=36857856&scope=bot%20applications.commands)
 
 
 ## Packages and technologies used
