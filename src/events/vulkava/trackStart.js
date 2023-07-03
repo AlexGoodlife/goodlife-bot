@@ -13,7 +13,6 @@ module.exports = {
     } 
     const channel = client.channels.cache.get(player.textChannelId);
 
-    console.log(player.voiceChannelId);
     const thumbnailUrl = client.guilds.cache.get(player.guildId).iconURL();
     const songImageUrl = track.thumbnail;
     const currentTimeString = timeFormat(player.current.duration);
@@ -41,35 +40,6 @@ module.exports = {
       }
     ])
     .setTimestamp();
-
-    // const playEmoji = "⏸️";
-    // const stopEmoji = "⏹️";
-    // const skipEmoji = "⏭️";
-    // const loopEmoji = "🔁";
-    // const skipBackEmoji = "⏪";
-    // let loopStyle = player.trackRepeat ? ButtonStyle.Danger : ButtonStyle.Secondary; 
-    // const buttons  = new ActionRowBuilder().setComponents(
-    //   new ButtonBuilder()
-    //     .setCustomId('pauseButton')
-    //     .setStyle(ButtonStyle.Secondary)
-    //     .setEmoji(playEmoji),
-    //   new ButtonBuilder()
-    //     .setCustomId('skipBackButton')
-    //     .setStyle(ButtonStyle.Success)
-    //     .setEmoji(skipBackEmoji),
-    //   new ButtonBuilder()
-    //     .setCustomId('skipButton')
-    //     .setEmoji(skipEmoji)
-    //     .setStyle(ButtonStyle.Success),
-    //   new ButtonBuilder()
-    //     .setCustomId('stopButton')
-    //     .setStyle(ButtonStyle.Danger)
-    //     .setEmoji(stopEmoji),
-    //   new ButtonBuilder()
-    //     .setCustomId('loopButton')
-    //     .setStyle(loopStyle)
-    //     .setEmoji(loopEmoji),
-    //  );
 
     const message = await channel.send({embeds : [embed], components : [buildButtons(player)]});
     if(client.lastTrack){

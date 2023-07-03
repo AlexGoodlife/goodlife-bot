@@ -5,7 +5,6 @@ module.exports = {
     // Don't really know what to do here, as for handling player moving goes
     console.log("Socket closed");
     console.log(reason);
-    console.log(player.voiceChannelId);
     if(player.createdVoiceChannelId === player.voiceChannelId){ // player was disconnected
       if(client.lastTrack){
         try{
