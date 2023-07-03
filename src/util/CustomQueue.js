@@ -6,7 +6,7 @@ module.exports = class CustomQueue extends DefaultQueue{
 
   constructor(){
     super();
-    this.previousTracks = new TrackStack(20); // 20 track history should be ennough
+    this.previousTracks = new TrackStack(999); // basically infinite
   }
 
   peek(){
@@ -46,19 +46,5 @@ module.exports = class CustomQueue extends DefaultQueue{
       this.poll();
     }
   }
-
-  // getDetails(low, high){
-  //   const data = [];
-  //   for (; low < high && this.tracks[low]; low++) {
-  //     const req = this.tracks[low].requester;
-  //     data.push(`${low + 1}º - \`${this.tracks[low].title}\` (Requested by: \`${req.username}#${req.discriminator}\`)`)
-  //   }
-  //   // return data.join('\n');
-  //   return data;
-  //   
-  // }
-
-
-
 
 }

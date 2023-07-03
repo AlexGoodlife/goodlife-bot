@@ -31,7 +31,6 @@ module.exports = {
     }
 
     const songsPerPage = Math.floor(25/3-1); // arbitrary number 
-    console.log(songsPerPage);
     const numPages = Math.ceil(player.queue.size / (songsPerPage));
     page = Math.min(page, numPages);
     response.setTitle(`Queue for ${interaction.guild.name}`);

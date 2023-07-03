@@ -13,7 +13,7 @@ module.exports = {
   ),
   async execute(interaction) {
     const amount = interaction.options.getNumber('amount');
-    skipBackPlayer(interaction, amount);
+    await skipBackPlayer(interaction, amount);
   },
 
 };

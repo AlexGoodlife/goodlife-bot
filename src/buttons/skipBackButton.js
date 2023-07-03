@@ -2,7 +2,7 @@ const { skipBackPlayer } = require('../interactions/skipBackPlayer');
 
 module.exports = {
   id : "skipBackButton",
-  execute(interaction){
-    skipBackPlayer(interaction, 1);
+  async  execute(interaction){
+    await skipBackPlayer(interaction, 1);
   }
 }

@@ -14,7 +14,7 @@ module.exports = {
   ),
   async execute(interaction) {
     const amount = interaction.options.getNumber('amount');
-    skipPlayer(interaction, amount);
+    await skipPlayer(interaction, amount);
   },
 
 };

@@ -8,23 +8,27 @@ module.exports = {
 
     if(!interaction.member.voice) {
       response.setDescription(`You need to join a voice channel first`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return {sucess : false, embed: response};
     }
 
     const player = client.vulkava.players.get(interaction.guild.id);
     if(!player) {
       response.setDescription(`There is no player for this guild`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return {sucess : false, embed: response};
     } 
 
     if(player.voiceChannelId != interaction.member.voice.channelId) {
       response.setDescription(`You are not in the same voice channel as me`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return {sucess : false, embed: response};
     } 
 
     if(!player.current){
       response.setDescription(`Queue is empty`);
-      return await interaction.reply({ embeds : [response], ephemeral: true});
+      await interaction.reply({ embeds : [response], ephemeral: true});
+      return {sucess : false, embed: response};
     } 
 
     const isPaused = player.paused;
@@ -37,6 +41,7 @@ module.exports = {
     }
     pauseString += ` "${title}"` // max titles for stuff is usually under 256 characters anyways
     response.setAuthor({name : pauseString, iconURL : iconUrl});
-    return await interaction.reply({ embeds : [response]});
+    return {sucess: true, embed : response};
+    // return await interaction.reply({ embeds : [response]});
   }
 }

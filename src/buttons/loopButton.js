@@ -1,12 +1,16 @@
 const { loopPlayer } = require('../interactions/loopPlayer.js');
-const { ButtonStyle , ButtonBuilder, ActionRowBuilder} = require('discord.js');
+const buildButtons = require('../util/dash-buttons.js');
 
 module.exports = {
   id : "loopButton",
-  execute(interaction){
-    const player = loopPlayer(interaction);
-    if(!player) return;
-    // do something here to update the button later
+  async execute(interaction){
+    const response = await loopPlayer(interaction);
+    if(!response.success) return;
+
+    const player = interaction.client.vulkava.players.get(interaction.guild.id);
+    if(!player)return;
+    await interaction.update({components: [buildButtons(player)]});
+    await interaction.followUp({embeds: [response.embed]});
     
   }
 }

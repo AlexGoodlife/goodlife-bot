@@ -11,26 +11,26 @@ module.exports = {
     if(!interaction.member.voice) {
       response.setDescription(`You need to join a voice channel first`);
       await interaction.reply({ embeds : [response], ephemeral: true});
-      return null;
+      return {success: true, embed: response};
     }
 
     const player = client.vulkava.players.get(interaction.guild.id);
     if(!player) {
       response.setDescription(`There is no player for this guild`);
       await interaction.reply({ embeds : [response], ephemeral: true});
-      return null;
+      return {success: true, embed: response};
     } 
 
     if(player.voiceChannelId != interaction.member.voice.channelId) {
       response.setDescription(`You are not in the same voice channel as me`);
       await interaction.reply({ embeds : [response], ephemeral: true});
-      return null;
+      return {success: true, embed: response};
     } 
 
     if(!player.current){
       response.setDescription(`Queue is empty`);
       await interaction.reply({ embeds : [response], ephemeral: true});
-      return null;
+      return {success: true, embed: response};
     } 
 
     let responseString = 'on';
@@ -39,8 +39,6 @@ module.exports = {
 
     }
     player.setTrackLoop(!player.trackRepeat);
-    // const title = player.current.title;
-    // const iconUrl = interaction.member.user.avatarURL();
     response.setDescription(`Looping was turned ${bold(responseString)} by ${interaction.member.toString()}`)
     if(player.trackRepeat){
       const currentTimeString = timeFormat(player.current.duration);
@@ -57,7 +55,7 @@ module.exports = {
       response.setThumbnail(player.current.thumbnail);
     }
     // response.setAuthor({name : `Looping is turned ${responseString}`, iconURL : iconUrl});
-    await interaction.reply({ embeds : [response]});
-    return player;
+    // await interaction.reply({ embeds : [response]});
+    return {success: true, embed: response};
   }
 }

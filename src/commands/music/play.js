@@ -46,6 +46,7 @@ module.exports = {
         selfDeaf: true,
         queue : new CustomQueue()
       });
+    player.createdVoiceChannelId = interaction.member.voice.channelId;
 
     if(player.state != "CONNECTED"){
       try{
