@@ -6,6 +6,7 @@ I leave the code here so anybody that wants to use it as a template is free to d
 
 # [Test him out](https://discord.com/api/oauth2/authorize?client_id=709471193043959883&permissions=36857856&scope=bot%20applications.commands)
 
+![example](assets/Capture.PNG)
 
 ## Packages and technologies used
  
