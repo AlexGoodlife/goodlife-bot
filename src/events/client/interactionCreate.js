@@ -43,7 +43,7 @@ const handleCommands = async (interaction) => {
   //     await interaction.reply({embeds : [response], ephemeral: true});
   //   }
   // }
-};
+}};
 
 const handleButtons = async (interaction) => {
   const button = interaction.client.buttons.get(interaction.customId);
